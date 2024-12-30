@@ -1,0 +1,25 @@
+using UnityEngine;
+
+public class ModelSwapper : MonoBehaviour
+{
+    public GameObject[] models;
+    private int currentIndex = 0;
+
+    void Start()
+    {
+        for (int i = 1; i < models.Length; i++)
+        {
+            models[i].SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            models[currentIndex].SetActive(false);
+            currentIndex = (currentIndex + 1) % models.Length;
+            models[currentIndex].SetActive(true);
+        }
+    }
+}
