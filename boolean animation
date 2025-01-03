@@ -1,0 +1,100 @@
+using System.Collections;
+using UnityEngine;
+
+public class EdinState : MonoBehaviour
+{
+    public Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        AnimateCharacter();
+    }
+
+    // Transition from Dance to Walking
+    public void DanceToWalking()
+    {
+        UnityEngine.Debug.Log("Switching to Walking state from Dance");
+        animator.SetBool("dance", false);
+        animator.SetBool("walking", true);
+        animator.SetBool("running", false); // Ensure Running is not active
+    }
+
+    // Transition from Walking to Running
+    public void WalkingToRunning()
+    {
+        UnityEngine.Debug.Log("Switching to Running state from Walking");
+        animator.SetBool("walking", false);
+        animator.SetBool("running", true);
+        animator.SetBool("dance", false); // Ensure Dance is not active
+    }
+
+    // Transition from Running to Dance
+    public void RunningToDance()
+    {
+        UnityEngine.Debug.Log("Switching to Dance state from Running");
+        animator.SetBool("running", false);
+        animator.SetBool("dance", true);
+        animator.SetBool("walking", false); // Ensure Walking is not active
+    }
+
+    // Transition from Dance to Running
+    public void DanceToRunning()
+    {
+        UnityEngine.Debug.Log("Switching to Running state from Dance");
+        animator.SetBool("dance", false);
+        animator.SetBool("running", true);
+        animator.SetBool("walking", false); // Ensure Walking is not active
+    }
+
+    // Transition from Walking to Dance
+    public void WalkingToDance()
+    {
+        UnityEngine.Debug.Log("Switching to Dance state from Walking");
+        animator.SetBool("walking", false);
+        animator.SetBool("dance", true);
+        animator.SetBool("running", false); // Ensure Running is not active
+    }
+
+    // Transition from Running to Walking
+    public void RunningToWalking()
+    {
+        UnityEngine.Debug.Log("Switching to Walking state from Running");
+        animator.SetBool("running", false);
+        animator.SetBool("walking", true);
+        animator.SetBool("dance", false); // Ensure Dance is not active
+    }
+
+    // Handle input transitions
+    public void AnimateCharacter()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // Dance to Walking
+        {
+            DanceToWalking();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // Walking to Running
+        {
+            WalkingToRunning();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) // Running to Dance
+        {
+            RunningToDance();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) // Dance to Running
+        {
+            DanceToRunning();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) // Walking to Dance
+        {
+            WalkingToDance();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) // Running to Walking
+        {
+            RunningToWalking();
+        }
+    }
+}
