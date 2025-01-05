@@ -1,0 +1,63 @@
+using UnityEngine;
+
+public class ARCameraZoomAndRotate : MonoBehaviour
+{
+    public Camera arCamera;
+    public float zoomSpeed = 0.1f;
+    public float minFov = 15f;
+    public float maxFov = 60f;
+    public float rotationSpeed = 0.2f;
+
+    private float previousTouchDistance = 0f;
+    private Vector2 previousTouch1Pos;
+    private Vector2 previousTouch2Pos;
+
+    void Update()
+    {
+       
+        if (Input.touchCount == 2)
+        {
+            
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = Input.GetTouch(1);
+
+           
+            float currentTouchDistance = (touch1.position - touch2.position).magnitude;
+
+          
+            if (previousTouchDistance != 0)
+            {
+                float difference = currentTouchDistance - previousTouchDistance;
+
+               
+                arCamera.fieldOfView = Mathf.Clamp(arCamera.fieldOfView - difference * zoomSpeed, minFov, maxFov);
+            }
+
+            
+            previousTouchDistance = currentTouchDistance;
+
+          
+            if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
+            {
+                Vector2 touch1Delta = touch1.position - previousTouch1Pos;
+                Vector2 touch2Delta = touch2.position - previousTouch2Pos;
+
+               
+                Vector2 delta = (touch1Delta + touch2Delta) / 2;
+
+               
+                arCamera.transform.Rotate(Vector3.up, -delta.x * rotationSpeed, Space.World);
+                arCamera.transform.Rotate(Vector3.right, delta.y * rotationSpeed, Space.World);
+            }
+
+           
+            previousTouch1Pos = touch1.position;
+            previousTouch2Pos = touch2.position;
+        }
+        else
+        {
+           
+            previousTouchDistance = 0f;
+        }
+    }
+}
