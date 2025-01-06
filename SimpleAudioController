@@ -1,0 +1,31 @@
+using UnityEngine;
+
+public class SimpleAudioController : MonoBehaviour
+{
+    public AudioClip audioClip;  
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))  
+        {
+            audioSource.Play();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))  
+        {
+            if (audioSource.isPlaying) audioSource.Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))  
+        {
+            audioSource.Stop();
+        }
+    }
+}
