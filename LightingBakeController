@@ -1,0 +1,24 @@
+using UnityEngine;
+using UnityEditor;
+
+public class LightingBakeController : MonoBehaviour
+{
+   
+    public static void BakeLighting()
+    {
+        
+        LightmapEditorSettings.resolution = 2;  
+        LightmapEditorSettings.indirectLightingIntensity = 1.5f;  
+        LightmapEditorSettings.padding = 2;  // Padding between lightmap texels
+
+       
+        Lightmapping.Bake();
+    }
+
+    [MenuItem("Lighting/Trigger Bake Lighting")]
+    public static void TriggerBakeLighting()
+    {
+        
+        BakeLighting();
+    }
+}
