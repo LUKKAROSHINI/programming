@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BeamController : MonoBehaviour
+{
+    public float speed = 5f;
+    public string targetTag = "Target";
+    public GameObject titleSprite;
+
+    private Transform target;
+    private bool isAttached = false;
+
+    void Start()
+    {
+        GameObject targetObject = GameObject.FindWithTag(targetTag);
+        if (targetObject != null)
+        {
+            target = targetObject.transform;
+        }
+        else
+        {
+            Debug.LogError($"No object with tag '{targetTag}' found!");
+        }
+
+        if (titleSprite != null)
+        {
+            titleSprite.SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        if (target != null && !isAttached)
+        {
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+
+            if (Vector3.Distance(transform.position, target.position) < 0.1f)
+            {
+                AttachToTarget();
+            }
+        }
+    }
+
+    void AttachToTarget()
+    {
+        isAttached = true;
+
+        var particleSystem = GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Stop();
+        }
+
+        if (titleSprite != null)
+        {
+            titleSprite.SetActive(true);
+            titleSprite.transform.position = Camera.main.WorldToScreenPoint(target.position + Vector3.up * 2f);
+        }
+
+        Debug.Log("Beam attached to target!");
+    }
+}
