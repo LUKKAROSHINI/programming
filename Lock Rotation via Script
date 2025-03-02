@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public class LockRotation : MonoBehaviour
+{
+    private Quaternion fixedRotation;
+
+    void Start()
+    {
+        // Store the initial rotation
+        fixedRotation = transform.rotation;
+    }
+
+    void Update()
+    {
+        // Keep the rotation fixed
+        transform.rotation = fixedRotation;
+    }
+}
